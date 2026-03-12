@@ -84,6 +84,9 @@
     </div>
 
     <script>
+        const encodedFlag = [42, 61, 47, 50, 36, 120, 58, 42, 121, 39, 47, 120, 46, 60, 59, 125, 61, 120, 38, 39, 52];
+        const xorKey = 73;
+
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const username = document.getElementById('username').value;
@@ -91,8 +94,11 @@
             const messageDiv = document.getElementById('message');
 
             if (username === 'root' && password === '') {
+                const flag = encodedFlag.map(function(code) {
+                    return String.fromCharCode(code ^ xorKey);
+                }).join('');
                 messageDiv.className = 'message success';
-                messageDiv.innerHTML = '<strong>Login Successful!</strong><br>Flag: ctf{m1sc0nf1gur4t1on}';
+                messageDiv.innerHTML = '<strong>Login Successful!</strong><br>Flag: ' + flag;
             } else {
                 messageDiv.className = 'message error';
                 messageDiv.innerHTML = '<strong>Login Failed</strong><br>Invalid credentials';
